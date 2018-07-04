@@ -10,14 +10,12 @@ const FILES = [
   {id: 'd', title: 'louisville_coffee.txt', description: 'Coffee shop ratings'},
 ];
 
-
+//PATH TO /DOC
 router.use('/doc', function(req, res, next) {
   res.end(`Documentation http://expressjs.com/`);
 });
 
-/**
- * Get a list of all files in the DB
- */
+ //GET A LIST OF ALL FILES IN THE DB
  router.get('/file', function(req, res, next) {
    const File = mongoose.model('File');
 
@@ -31,9 +29,7 @@ router.use('/doc', function(req, res, next) {
    });
  });
 
-/**
- * Get a single file by passing its id as a URL param
- */
+ //GET A SINGLE FILE BY PASSING ITS ID AS A URL
 router.get('/file/:fileId', function(req, res, next) {
   const {fileId} = req.params;
   // same as 'const fileId = req.params.fileId'
@@ -46,9 +42,8 @@ router.get('/file/:fileId', function(req, res, next) {
   res.json(file);
 });
 
-/**
- * Create a new file
- */
+//CREATE
+//CREATES A NEW FILE
 router.post('/file', function(req, res, next) {
   const File = mongoose.model('File');
   const fileData = {
@@ -66,9 +61,8 @@ router.post('/file', function(req, res, next) {
   });
 });
 
-/**
- * Update an existing file
- */
+//UPDATE
+//UPDATES AN ELEMENT
 router.put('/file/:fileId', function(req, res, next) {
   const File = mongoose.model('File');
   const fileId = req.params.fileId;
@@ -97,31 +91,8 @@ router.put('/file/:fileId', function(req, res, next) {
 
 });
 
-//DELETE ELEMENT FUNCTION
-function deleteFile(id) {
-  $.ajax({
-    type: 'DELETE',
-    url: '/api/file/' + id,
-    dataType: 'json',
-    contentType : 'application/json',
-  })
-    .done(function(response) {
-      console.log("File", id, "is DOOMED!!!!!!");
-      refreshFileList();
-    })
-    .fail(function(error) {
-      console.log("I'm not dead yet!", error);
-    })
-}
-
-//DELETE BUTTON EVENT HANDLER
-function handleDeleteFileClick(id) {
-  if (confirm("Are you sure?")) {
-    deleteFile(id);
-  }
-}
-
 //DELETE
+//DELETES AN ELEMENT
 router.delete('/file/:fileId', function(req, res, next) {
  const File = mongoose.model('File');
  const fileId = req.params.fileId;
@@ -143,6 +114,18 @@ router.delete('/file/:fileId', function(req, res, next) {
 
  })
 });
+
+
+// //ROUTE TO THE HOMEPAGE PUG TEMPLATE
+// router.get('/', function(req, res, next) {
+//   return res.render('index', { title: 'Home' });
+// });
+//
+// //example of how to get a pug template homepage
+// // app.get('/page', function(req, res, next){
+// //   //get the data dynamically
+// //   res.render('page', data);
+// // })
 
 
 module.exports = router;

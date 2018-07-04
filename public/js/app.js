@@ -1,4 +1,5 @@
 
+//FETCHES DATA FROM THE API
 function getFiles() {
   return $.ajax('/api/file')
     .then(res => {
@@ -11,6 +12,8 @@ function getFiles() {
     });
 }
 
+//FETCH FILES FROM THE API AND RENDER TO THE PAGE
+//Whenever the list of files is refreshed, save that array to a property on the global window object
 function refreshFileList() {
   const template = $('#list-template').html();
   const compiledTemplate = Handlebars.compile(template);
@@ -26,16 +29,20 @@ function refreshFileList() {
     })
 }
 
+//BUTTON FOR SHOWING FORM VISIBILITY
 function handleAddFileClick() {
   console.log("Baby steps...");
   setFormData({});
   toggleAddFileFormVisibility();
 }
 
+//HANDLER FOR HIDING FORM VISIBILITY
 function toggleAddFileFormVisibility() {
   $('#form-container').toggleClass('hidden');
 }
 
+//The Submit button will trigger a javascript function that grabs the data from the form and POSTs it to an API endpoint
+// After POSTing the data and receiving a response, the page will refresh the list of Files.
 function submitFileForm() {
   console.log("You clicked 'submit'. Congratulations.");
 
@@ -73,10 +80,12 @@ function submitFileForm() {
   console.log("Your file data", fileData);
 }
 
+//CANCEL BUTTON WILL CLEAR THE FORM WITHOUT POSTING THE DATA
 function cancelFileForm() {
   toggleAddFileFormVisibility();
 }
 
+//EDIT BUTTON HANDLER
 function handleEditFileClick(id) {
   const file = window.fileList.find(file => file._id === id);
   if (file) {
@@ -92,7 +101,7 @@ function handleDeleteFileClick(id) {
   }
 }
 
-
+//SET FORM DATA
 function setFormData(data) {
   data = data || {};
 
@@ -124,6 +133,5 @@ function deleteFile(id) {
     })
 }
 
-
-
+//REFRESHES THE LIST
 refreshFileList();
